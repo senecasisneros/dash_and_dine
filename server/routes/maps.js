@@ -5,6 +5,7 @@ const axios = require('axios');
 const google_key = process.env.google_key;
 
 const gUrl = 'https://maps.googleapis.com/maps/api/geocode/json?address=';
+
 router.route('/address')
 	.post((req, res) => {
   const address = req.body.address.replace(/ /g, '+');
