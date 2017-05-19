@@ -24,17 +24,14 @@ class AutoComplete extends React.Component {
   }
 
   componentDidMount() {
-    const script = document.createElement("script");
+    const script = document.createElement('script');
     script.src = `https://maps.googleapis.com/maps/api/js?key=${google_key}&libraries=places`;
     script.async = false;
     document.body.appendChild(script);
-    var that=this
-    script.onload=function(){
-      console.log("loaded");
-
-    _autocomplete = new google.maps.places.Autocomplete((document.getElementById('autocomplete')), {types: ['geocode']});
+    script.onload = function () {
+      _autocomplete = new google.maps.places.Autocomplete((document.getElementById('autocomplete')), { types: ['geocode'] });
+    };
   }
-}
   onChange(e) {
     this.setState({ address: e.target.value });
   }
@@ -52,7 +49,7 @@ class AutoComplete extends React.Component {
       const obj = {
         address,
         lat,
-        lng
+        lng,
       };
       this.props.getMaps(obj);
       this.props.getLocation(lat, lng);
@@ -76,11 +73,11 @@ class AutoComplete extends React.Component {
             className="btnStyle"
             type="submit"
             label="Enter"
-            primary={true}
+            primary
           />
         </form>
       </div>
-    )
+    );
   }
 }
 

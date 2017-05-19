@@ -19,11 +19,11 @@ render(
     <Provider store={store}>
       <Router history={browserHistory}>
         <Route path="/" component={Layout}>
-        <IndexRoute component={Splash} />
-        <Route path="/location" component={LocationPage} />
-      </Route>
-    </Router>
-  </Provider>
-</MuiThemeProvider>,
+          <IndexRoute component={Splash} />
+          <Route path="/location" component={LocationPage} />
+        </Route>
+      </Router>
+    </Provider>
+  </MuiThemeProvider>,
 document.getElementById('root')
 );

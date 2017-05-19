@@ -137,7 +137,8 @@ class Maps extends React.Component {
         ]}
         loadingMessage={'Be happy'}
         params={{ v: '3.exp', key: 'YOUR_API_KEY' }}
-        onMapCreated={this.onMapCreated}>
+        onMapCreated={this.onMapCreated}
+        >
         <Marker
           lat={latitude}
           lng={longitude}
