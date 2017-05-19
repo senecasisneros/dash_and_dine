@@ -1,60 +1,83 @@
-'use strict';
+import express from 'express';
+import http from 'http';
+import path from 'path';
+import morgan from 'morgan';
+import bodyParser from 'body-parser';
+import mongoose from 'mongoose';
+import webpack from 'webpack';
+import dotenv from 'dotenv';
+import hotMiddleware from 'webpack-hot-middleware';
+import devMiddleware from 'webpack-dev-middleware';
+import webpackConfig from '../webpack.config';
+import socketIO from 'socket.io';
+// import api from './routes';
 
-// CONSTANTS
+// ---------------------------- CONFIG -----------------------------------------
+mongoose.Promise = Promise;
+dotenv.config({ silent: true });
 const PORT = process.env.PORT || 8000;
-const MONGO_URI = process.env.MONGODB_URI || 'mongodb://localhost/dashdine';
+const MONGO = process.env.MONGODB_URI || 'mongodb://localhost/dashanddine';
+const BUILD = process.env.NODE_ENV || 'development';
+const app = express();
+const server = new http.Server(app);
+const io = socketIO(server);
+let indexFile;
+let socketEmitter;
 
-require('dotenv').config();
-
-// PACKAGE REQUIRES
-const bodyParser = require('body-parser');
-const cookieParser = require('cookie-parser');
-const express = require('express');
-const morgan = require('morgan');
-const path = require('path');
-
-// DB CONNECT
-require('mongoose').connect(MONGO_URI, err => {
-  if (err) throw err;
-  console.log(`MongoDB connected to ${MONGO_URI}`);
+io.on('connection', (socket) => {
+  process.stdout.write('\n>>> Socket Connection!\n');
+  socketEmitter = (type, data) => socket.emit(type, data);
 });
 
-// APP DECLARATION
-const app = express();
-
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, '../build')));
-} else {
-  // WEBPACK CONFIG
-  const webpack = require('webpack');
-  const webpackConfig = require('../webpack.dev');
-  const compiler = webpack(webpackConfig);
-
-  app.use(require('webpack-dev-middleware')(compiler, {
-    noInfo: true,
-    publicPath: webpackConfig.output.publicPath,
-  }));
-
-  app.use(require('webpack-hot-middleware')(compiler));
-}
-
-// GENERAL MIDDLEWARE
+// ---------------------- Express Middleware -----------------------------------
 app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cookieParser());
+app.use(express.static('public'));
+app.use((req, res, next) => {
+  const resRef = res;
+  resRef.socketEmitter = socketEmitter;
+  resRef.handle = (err, data) => {
+    if (err) {
+      process.stdout.write(`Response Error: 😕
+${err}
+`);
+    } else {
+      process.stdout.write(`Response Data: 😎
+${data}
+`);
+    }
+    res.status(err ? 400 : 200).send(err || data);
+  };
+  next();
+});
 
-// ROUTES
+if (BUILD === 'development') {
+  const compiler = webpack(webpackConfig);
+
+  app.use(devMiddleware(compiler, {
+    noInfo: true,
+    publicPath: webpackConfig.output.publicPath,
+  }));
+  app.use(hotMiddleware(compiler));
+}
+
 app.use('/api', require('./routes/api'));
-
 app.get('*', (req, res) => {
-  const indexPath = path.join(__dirname, '../index.html');
-  res.sendFile(indexPath);
+  if (BUILD === 'development') {
+    indexFile = path.resolve('./src/index.html');
+  } else {
+    indexFile = path.resolve('./src/index.html');
+  }
+  process.stdout.write(`==> 📁  indexFile = ${indexFile}
+`);
+  res.sendFile(indexFile);
 });
 
-// SERVER LISTEN
-app.listen(PORT, err => {
-  if (err) throw err;
-
-  console.log(`Server listening at http://localhost:${PORT}`);
-});
+// --------------------------- Listeners ---------------------------------------
+server.listen(PORT, err =>
+  process.stdout.write(err || `==> 📡  Server @ ${PORT}
+`));
+mongoose.connect(MONGO, err =>
+  process.stdout.write(err || `==> 📜  MONGO @ ${MONGO}
+`));

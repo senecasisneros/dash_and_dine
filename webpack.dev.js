@@ -4,6 +4,7 @@ const path = require('path');
 module.exports = {
   debug: true,
   devtool: 'cheap-module-eval-source-map',
+  noInfo: false,
   entry: [
     'webpack-hot-middleware/client?reload=true',
     'bootstrap-loader',
@@ -22,6 +23,19 @@ module.exports = {
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin(),
+    new webpack.optimize.DedupePlugin(),
+    new webpack.optimize.UglifyJsPlugin({
+      minimize: true,
+      compress: {
+        warnings: false
+      }
+    }),
+    new webpack.DefinePlugin({
+      'process.env': {
+        'NODE_ENV': JSON.stringify('development'),
+        'API_HOST': 'http://localhost:8000'
+      }
+    })
   ],
   module: {
     loaders: [

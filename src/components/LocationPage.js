@@ -36,11 +36,11 @@ class LocationPage extends Component {
         <Card className="cardStyle">
           <CardTitle className="cardTitle" title={name} subtitle={fullAddress} />
           <CardText>
-            <div className="col-xs-4">
+            <div className="col-md-4 cuisine">
               <h3 className="cuisineHead">{cuisine}</h3>
               <WeatherDisplay main={main} weather_desc={weather_desc} />
             </div>
-            <div className="col-xs-8">
+            <div className="col-md-8 mapDiv">
               <Maps mapAdd={address} coord={coordinate} />
             </div>
           </CardText>
