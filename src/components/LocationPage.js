@@ -1,9 +1,9 @@
 import { connect } from 'react-redux';
 import React, { Component } from 'react';
-import { Card, CardText, CardTitle, CardActions, FlatButton } from 'material-ui';
 import WeatherDisplay from './WeatherDisplay';
 import { receiveLocation, changeRes } from '../actions/LocationActions';
 import Maps from './Maps';
+import { Button, Jumbotron } from 'react-bootstrap'
 
 class LocationPage extends Component {
   constructor() {
@@ -33,38 +33,37 @@ class LocationPage extends Component {
 
     return (
       <div>
-        <Card className="cardStyle">
-          <CardTitle className="cardTitle" title={name} subtitle={fullAddress} />
-          <CardText>
-            <div className="cuisine">
-              <h3 className="cuisineHead">{cuisine}</h3>
-              <WeatherDisplay main={main} weather_desc={weather_desc} />
-            </div>
-            <div className="mapDiv">
-              <Maps mapAdd={address} coord={coordinate} />
-            </div>
-          </CardText>
-          <CardActions id="nextRest">
-            <FlatButton label="Next Restaurant" secondary onClick={this._changeRes} />
-          </CardActions>
-        </Card>
+        <Jumbotron className="Jumbotron1">
+          <h2 className="companyName">{name}</h2>
+          <h6 id="fullAdress">{fullAddress}</h6>
+          <div className="center-block">
+          <Button id="nextRest" bsStyle="primary" onClick={this._changeRes}>Next Restaurant</Button>
+          </div>
+          <div className="cuisine col-sm-12 col-md-6">
+            <h3 className="cuisineHead">{cuisine}</h3>
+            <WeatherDisplay main={main} weather_desc={weather_desc} />
+          </div>
+          <div className="mapDiv col-sm-12 col-md-6">
+            <Maps mapAdd={address} coord={coordinate} />
+          </div>
+        </Jumbotron>
       </div>
     );
   }
-  }
+}
 
 export default connect(state => ({
   res: state.restaurant.choice,
   weather: state.weather,
 }),
-  dispatch => {
-    return {
-      receiveLocation() {
-        dispatch(receiveLocation());
-      },
-      changeRes() {
-        dispatch(changeRes());
-      },
-    };
-  }
+dispatch => {
+  return {
+    receiveLocation() {
+      dispatch(receiveLocation());
+    },
+    changeRes() {
+      dispatch(changeRes());
+    },
+  };
+}
 )(LocationPage);

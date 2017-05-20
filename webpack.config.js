@@ -98,6 +98,10 @@ const devConfig = {
         test: /\.json$/,
         loader: 'json-loader',
       },
+      {
+        test: /bootstrap-sass[\/\\]assets[\/\\]javascripts[\/\\]/,
+        loader: 'imports?jQuery=jquery',
+      },
     ],
   },
   resolve: {
@@ -180,6 +184,10 @@ const prodConfig = {
       {
         test: /\.json$/,
         loader: 'json-loader',
+      },
+      {
+        test: /bootstrap-sass[\/\\]assets[\/\\]javascripts[\/\\]/,
+        loader: 'imports?jQuery=jquery',
       },
     ],
   },

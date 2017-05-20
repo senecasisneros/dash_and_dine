@@ -21,24 +21,17 @@ body {
   text-align: center;
 }
 
-/*.jum2{
-  margin-top: 5%;
-  width: auto;
-  height: 80vh;
-  background: rgba(255,255,255,0.4);
-  font-size: 15px;
-}*/
-
 .mainTitle {
   font-size: 15vh !important;
   text-align: center;
 }
 
 .weatherContainer {
-  width: 150px;
+  /*width: 150px;*/
   height: 150px;
   text-align: center;
   position: relative;
+  /*margin-top: 50px;*/
   margin-bottom: 100px;
 }
 
@@ -46,7 +39,7 @@ body {
   position: absolute;
   margin: auto;
   top: 40%;
-  left: 30%;
+  left: 33%;
   right: 50;
   bottom: 50;
   color: white;
@@ -77,8 +70,9 @@ body {
 }
 
 #nextRest {
-  /*margin-left: 10%;*/
   text-align: center;
+  align-items: center;
+  /*margin-top: 1%;*/
 }
 
 .cardTitle {
@@ -93,19 +87,39 @@ h1 {
 }
 
 .cuisine {
-  float: right;
-  margin-right: 185px;
-  /*margin-bottom: 100px;*/
+  margin-left: -5%;
 }
 
 .cuisineHead {
-  margin-bottom: 20px;
   font-size: 40px;
   color: black;
-  /*margin-left: 14px;*/
+  margin-top: 50px;
   font-family: 'Kaushan Script', cursive;
 }
 
 .mapDiv {
-  margin-left: 100px;
+  margin-top: 20px;
+
+}
+
+.companyName {
+  font-family: 'Kaushan Script', cursive;
+  margin-top: 0;
+  font-size: 40px;
+}
+
+
+.Jumbotron1{
+  align-items: center;
+  margin-top: 5%;
+  width: auto;
+  height: 90vh;
+  background: rgba(255,255,255,0.4);
+  text-align: center;
+  font-family: 'Kaushan Script', cursive;
+}
+
+#fullAdress {
+  font-size: 15px;
+  /*margin-bottom: 3%;*/
 }
