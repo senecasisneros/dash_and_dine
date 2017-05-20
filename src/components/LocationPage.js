@@ -33,7 +33,7 @@ class LocationPage extends Component {
 
     return (
       <div>
-        <Jumbotron className="Jumbotron1">
+        <Jumbotron className="Jumbotron1 container-fluid">
           <h2 className="companyName">{name}</h2>
           <h6 id="fullAdress">{fullAddress}</h6>
           <div className="center-block">

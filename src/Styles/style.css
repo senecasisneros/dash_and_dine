@@ -12,11 +12,11 @@ body {
   clear: both;
 }
 
-.mainJumbotron{
+.mainJumbotron {
   align-items: center;
   margin-top: 5%;
   width: auto;
-  height: 85vh;
+  /*height: auto;*/
   background: rgba(255,255,255,0.4);
   text-align: center;
 }
@@ -32,7 +32,8 @@ body {
   text-align: center;
   position: relative;
   /*margin-top: 50px;*/
-  margin-bottom: 100px;
+  margin-bottom: 140px;
+  /*margin-bottom: 100px;*/
 }
 
 .text-image {
@@ -108,12 +109,11 @@ h1 {
   font-size: 40px;
 }
 
-
 .Jumbotron1{
   align-items: center;
-  margin-top: 5%;
+  margin-top: 3%;
   width: auto;
-  height: 90vh;
+  /*height: 90vh;*/
   background: rgba(255,255,255,0.4);
   text-align: center;
   font-family: 'Kaushan Script', cursive;
@@ -121,5 +121,4 @@ h1 {
 
 #fullAdress {
   font-size: 15px;
-  /*margin-bottom: 3%;*/
 }
