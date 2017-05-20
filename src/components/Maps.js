@@ -26,7 +26,7 @@ class Maps extends React.Component {
     const { latitude, longitude } = this.props.coord;
     return (
       <Gmaps
-        width={'575px'}
+        width={'500px'}
         height={'400px'}
         lat={latitude}
         lng={longitude}

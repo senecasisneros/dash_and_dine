@@ -12,7 +12,7 @@ body {
   clear: both;
 }
 
-.jum1{
+.mainJumbotron{
   align-items: center;
   margin-top: 5%;
   width: auto;
@@ -21,13 +21,13 @@ body {
   text-align: center;
 }
 
-.jum2{
+/*.jum2{
   margin-top: 5%;
   width: auto;
   height: 80vh;
   background: rgba(255,255,255,0.4);
   font-size: 15px;
-}
+}*/
 
 .mainTitle {
   font-size: 15vh !important;
@@ -39,10 +39,7 @@ body {
   height: 150px;
   text-align: center;
   position: relative;
-  /*margin-left: 15%;*/
-  /*margin-top: 5%;*/
   margin-bottom: 100px;
-  /*float: left;*/
 }
 
 .text-image {
@@ -65,10 +62,9 @@ body {
 
 .cardStyle {
   margin-top: 5%;
-  width: 95%;
+  width: auto%;
   height: auto;
   margin-left: 33px;
-
 }
 
 .inputStyle {
@@ -98,15 +94,15 @@ h1 {
 
 .cuisine {
   float: right;
-  margin-right: 220px;
-  margin-bottom: 50px;
+  margin-right: 185px;
+  /*margin-bottom: 100px;*/
 }
 
 .cuisineHead {
   margin-bottom: 20px;
   font-size: 40px;
   color: black;
-  margin-left: 14px;
+  /*margin-left: 14px;*/
   font-family: 'Kaushan Script', cursive;
 }
 
