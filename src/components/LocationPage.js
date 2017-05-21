@@ -39,11 +39,11 @@ class LocationPage extends Component {
           <div className="center-block">
           <Button id="nextRest" bsStyle="primary" onClick={this._changeRes}>Next Restaurant</Button>
           </div>
-          <div className="cuisine col-sm-12 col-md-6">
+          <div className="cuisine col-sm-6 col-xs-6 col-md-6">
             <h3 className="cuisineHead">{cuisine}</h3>
             <WeatherDisplay main={main} weather_desc={weather_desc} />
           </div>
-          <div className="mapDiv col-sm-12 col-md-6">
+          <div className="mapDiv col-sm-6 col-xs-6 col-md-6">
             <Maps mapAdd={address} coord={coordinate} />
           </div>
         </Jumbotron>

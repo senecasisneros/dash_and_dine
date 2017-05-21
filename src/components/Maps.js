@@ -16,7 +16,7 @@ class Maps extends React.Component {
   }
 
   onCloseClick() {
-    console.log('onCloseClick');
+    console.log('onCloseClick'); 
   }
 
   onClick(e) {
@@ -26,8 +26,8 @@ class Maps extends React.Component {
     const { latitude, longitude } = this.props.coord;
     return (
       <Gmaps
-        width={'500px'}
-        height={'400px'}
+        width={'100%'}
+        height={'300px'}
         lat={latitude}
         lng={longitude}
         zoom={15}
