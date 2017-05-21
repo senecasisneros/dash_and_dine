@@ -74,7 +74,8 @@ body {
 #nextRest {
   text-align: center;
   align-items: center;
-  margin: 1%;
+  margin-right: 1%;
+  margin-bottom: 5%;
 }
 
 .cardTitle {
@@ -88,19 +89,13 @@ h1 {
   font-style: italic;
 }
 
-.cuisine {
-  /*margin-left: -30px;*/
-}
-
-.cuisineHead {
-  font-size: 40px;
-  color: black;
-  margin-top: 50px;
-  font-family: 'Kaushan Script', cursive;
+#cuisineHead {
+  font-size: 17px;
+  margin-bottom: 0px;
 }
 
 .mapDiv {
-  margin-top: 5%;
+  /*margin-top: 5%;*/
 }
 
 .companyName {
@@ -121,4 +116,23 @@ h1 {
 
 #fullAdress {
   font-size: 15px;
+}
+
+#phone {
+  font-size: 15px;
+  margin-bottom: -2px;
+}
+
+#reviewCount {
+  font-size: 15px;
+  display: inline-block;
+  margin-right: 1%;
+  margin-bottom: 10px;
+}
+
+#starRating {
+  font-size: 18px;
+  display: inline-block;
+  float: right;
+  margin-bottom: -10px;
 }
