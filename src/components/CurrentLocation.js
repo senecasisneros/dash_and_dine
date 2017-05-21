@@ -26,8 +26,9 @@ class CurrentLocation extends React.Component {
       <FlatButton
         onClick={this.onClick}
         className="btnStyle"
-        type="button"
+        // type="button"
         label="Current Location"
+        fullWidth={true}
         primary
       />
     );

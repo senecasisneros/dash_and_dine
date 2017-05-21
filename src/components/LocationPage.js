@@ -6,7 +6,6 @@ import Maps from './Maps';
 import { Button, Jumbotron } from 'react-bootstrap';
 import StarRatingComponent from 'react-star-rating-component';
 
-
 class LocationPage extends Component {
   constructor() {
     super();
@@ -27,21 +26,23 @@ class LocationPage extends Component {
       return (<h1>Loading...</h1>);
     }
     const { name, display_phone, url, location, snippet_text, categories, rating, review_count } = this.props.res;
-    console.log('this.props.res:', this.props.res);
+    console.log('this.props:', this.props.weather.state.weather[0].description);
     const { address, city, state_code, postal_code, coordinate } = location;
     const fullAddress = address + ' ' + city + ', ' + state_code + ' ' + postal_code;
     const phoneNumber = display_phone.substring(1);
     const { main, weather } = this.props.weather.state;
     const weather_desc = weather[0].main;
+    let description = this.props.weather.state.weather[0].description;
+    description = description.charAt(0).toUpperCase() + description.slice(1);
     const cuisine = categories[0][0];
 
     return (
       <div>
-        <Jumbotron className="Jumbotron1 container-fluid">
+        <Jumbotron className="details container-fluid">
           <h2 className="companyName">{name}</h2>
           <h6 id="fullAdress">{fullAddress}</h6>
           <h6 id="phone">{phoneNumber}</h6>
-          <h6 id="cuisineHead">{cuisine}</h6>
+          <h6 id="cuisine">{cuisine}</h6>
           <p id="reviewCount">{review_count} Reviews</p>
           <StarRatingComponent
             name="rating"
@@ -55,7 +56,8 @@ class LocationPage extends Component {
           <a id="nextRest" className="btn btn-primary" target="_blank" href={url}>Yelp</a>
           </div>
           <div className="cuisine col-xs-12 col-sm-12 col-md-6 col-lg-6">
-            <WeatherDisplay main={main} weather_desc={weather_desc} />
+            {/* <p id="description">{description}</p> */}
+          <WeatherDisplay main={main} weather_desc={weather_desc} description={description}/>
           </div>
           <div className="mapDiv col-xs-12 col-sm-12 col-md-6 col-lg-6">
             <Maps mapAdd={address} coord={coordinate} />

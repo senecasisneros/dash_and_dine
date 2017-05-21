@@ -67,7 +67,7 @@ class AutoComplete extends React.Component {
             value={this.state.address}
             id="autocomplete"
             type="text"
-            size="50"
+            size="60"
           />
           <FlatButton
             className="btnStyle"
