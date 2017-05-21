@@ -16,7 +16,7 @@ class Maps extends React.Component {
   }
 
   onCloseClick() {
-    console.log('onCloseClick'); 
+    console.log('onCloseClick');
   }
 
   onClick(e) {
@@ -135,7 +135,7 @@ class Maps extends React.Component {
             ],
           },
         ]}
-        loadingMessage={'Be happy'}
+        loadingMessage={'Looking for location'}
         params={{ v: '3.exp', key: 'YOUR_API_KEY' }}
         onMapCreated={this.onMapCreated}
         >
