@@ -54,9 +54,9 @@ class LocationPage extends Component {
           <div className="center-block">
           <Button id="nextRest" bsStyle="primary" onClick={this._changeRes}>Next Restaurant</Button>
           <a id="nextRest" className="btn btn-primary" target="_blank" href={url}>Yelp</a>
+        <a id="nextRest" className="btn btn-primary" href='/'>New Search</a>
           </div>
           <div className="cuisine col-xs-12 col-sm-12 col-md-6 col-lg-6">
-            {/* <p id="description">{description}</p> */}
           <WeatherDisplay main={main} weather_desc={weather_desc} description={description}/>
           </div>
           <div className="mapDiv col-xs-12 col-sm-12 col-md-6 col-lg-6">
