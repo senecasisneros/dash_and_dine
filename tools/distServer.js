@@ -5,6 +5,8 @@ import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import socketIO from 'socket.io';
+import api from '../server/routes/api';
+
 
 // ---------------------------- CONFIG -----------------------------------------
 mongoose.Promise = Promise;
@@ -16,7 +18,7 @@ const io = socketIO(server);
 let socketEmitter;
 
 io.on('connection', (socket) => {
-  process.stdout.write('\n>>> Socket Connection!\n');
+  process.stdout.write('>>> Socket Connection!');
   socketEmitter = (type, data) => socket.emit(type, data);
 });
 
@@ -32,15 +34,13 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use('/api', require('../server/app'));
+app.use('/api', api);
 app.get('*', (req, res) => res.sendFile(path.resolve('dist/index.html')));
 
 // --------------------------- Listeners ---------------------------------------
 const PORT = process.env.PORT || 3000;
 const MONGO = process.env.MONGODB_URI || 'mongodb://localhost/dashanddine';
 server.listen(PORT, err =>
-  process.stdout.write(err || `==> 📡  Server @ ${PORT}
-`));
+  process.stdout.write(err || `==> 📡  Server @ ${PORT}`));
 mongoose.connect(MONGO, err =>
-  process.stdout.write(err || `==> 📜  MONGO @ ${MONGO}
-`));
+  process.stdout.write(err || `==> 📜  MONGO @ ${MONGO}`));

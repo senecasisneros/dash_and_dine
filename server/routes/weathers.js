@@ -10,6 +10,9 @@ router.route('/:lat/:long')
     Weather.weather(req.params.lat, req.params.long, (err, weather) => {
       if (err) res.status(400).send(err);
       res.send(weather);
+    })
+    .catch(err => {
+      res.status(400).send(err);
     });
   });
 

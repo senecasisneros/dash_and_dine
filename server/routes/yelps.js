@@ -10,6 +10,9 @@ router.route('/:lat/:long')
     Yelp.yelpSearch(req.params.lat, req.params.long, (err, data) => {
       if (err) res.status(400).send(err);
       res.send(data);
+    })
+    .catch(err => {
+      res.status(400).send(err);
     });
   });
 
