@@ -5,7 +5,6 @@ import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import socketIO from 'socket.io';
-import api from '../server/api';
 
 // ---------------------------- CONFIG -----------------------------------------
 mongoose.Promise = Promise;
