@@ -10,7 +10,6 @@ import hotMiddleware from 'webpack-hot-middleware';
 import devMiddleware from 'webpack-dev-middleware';
 import webpackConfig from '../webpack.config';
 import socketIO from 'socket.io';
-// import api from './routes';
 
 // ---------------------------- CONFIG -----------------------------------------
 mongoose.Promise = Promise;

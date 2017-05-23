@@ -10,7 +10,6 @@ class Display extends Component {
     return (
       <div style={{ height: '75%' }}>
         <Maps />
-
       </div>
     );
   }

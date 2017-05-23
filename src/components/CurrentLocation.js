@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import { FlatButton } from 'material-ui';
 
 class CurrentLocation extends React.Component {
@@ -26,13 +26,12 @@ class CurrentLocation extends React.Component {
       <FlatButton
         onClick={this.onClick}
         className="btnStyle"
-        // type="button"
+        type="button"
         label="Current Location"
-        fullWidth={true}
         primary
       />
     );
   }
-  }
+}
 
 export default CurrentLocation;
