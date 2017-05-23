@@ -32,7 +32,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use('/api', require('../routes/api'));
+app.use('/api', require('../server/app'));
 app.get('*', (req, res) => res.sendFile(path.resolve('dist/index.html')));
 
 // --------------------------- Listeners ---------------------------------------
