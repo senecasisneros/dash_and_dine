@@ -10,7 +10,9 @@ import hotMiddleware from 'webpack-hot-middleware';
 import devMiddleware from 'webpack-dev-middleware';
 import webpackConfig from '../webpack.config';
 import socketIO from 'socket.io';
-import api from './routes/api.js';
+// import api from './routes/api.js';
+var api = require('./routes');
+
 
 // ---------------------------- CONFIG -----------------------------------------
 mongoose.Promise = Promise;
@@ -61,6 +63,8 @@ if (BUILD === 'development') {
   }));
   app.use(hotMiddleware(compiler));
 }
+
+// app.use('/api', require('./routes'));
 
 app.use('/api', api);
 app.get('*', (req, res) => {

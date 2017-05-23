@@ -5,7 +5,8 @@ import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import socketIO from 'socket.io';
-import api from '../server/routes/api';
+// import api from '../server/routes/api';
+var api = require('../server/routes/api');
 
 
 // ---------------------------- CONFIG -----------------------------------------
@@ -35,6 +36,8 @@ app.use((req, res, next) => {
 });
 
 app.use('/api', api);
+
+// app.use('/api', require('../server/routes/api.js'));
 app.get('*', (req, res) => res.sendFile(path.resolve('dist/index.html')));
 
 // --------------------------- Listeners ---------------------------------------
