@@ -14,7 +14,7 @@ import socketIO from 'socket.io';
 // ---------------------------- CONFIG -----------------------------------------
 mongoose.Promise = Promise;
 dotenv.config({ silent: true });
-const PORT = process.env.PORT || 8000;
+const PORT = process.env.PORT || 3000;
 const MONGO = process.env.MONGODB_URI || 'mongodb://localhost/dashanddine';
 const BUILD = process.env.NODE_ENV || 'development';
 const app = express();

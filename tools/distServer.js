@@ -36,7 +36,7 @@ app.use('/api', require('../server/app'));
 app.get('*', (req, res) => res.sendFile(path.resolve('dist/index.html')));
 
 // --------------------------- Listeners ---------------------------------------
-const PORT = process.env.PORT || 8000;
+const PORT = process.env.PORT || 3000;
 const MONGO = process.env.MONGODB_URI || 'mongodb://localhost/dashanddine';
 server.listen(PORT, err =>
   process.stdout.write(err || `==> 📡  Server @ ${PORT}

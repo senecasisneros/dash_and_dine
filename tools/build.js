@@ -1,5 +1,6 @@
 import webpack from 'webpack';
 import webpackConfig from '../webpack.config';
+import colors from 'colors';
 
 process.stdout.write('⏲  Generating minified bundle for production via Webpack.'.white.bold);
 
