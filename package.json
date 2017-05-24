@@ -2,7 +2,7 @@
   "name": "dash-and-dine",
   "version": "1.0.0",
   "description": "",
-  "main": "server/app.js",
+  "main": "app.js",
   "scripts": {
     "lint": "./node_modules/.bin/esw -w --color --fix ./src/ ./server/",
     "test": "echo \"Error: no test specified\" && exit 1",
