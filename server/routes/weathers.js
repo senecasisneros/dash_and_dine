@@ -3,7 +3,7 @@
 const express = require('express');
 const router = express.Router();
 
-const weather = require('../models/weather');
+const Weather = require('../models/weather');
 
 router.route('/:lat/:long')
   .get((req, res) => {

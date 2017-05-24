@@ -11,7 +11,7 @@ import devMiddleware from 'webpack-dev-middleware';
 import webpackConfig from '../webpack.config';
 import socketIO from 'socket.io';
 // import api from './routes/api.js';
-var api = require('./routes');
+var api = require('./routes/api');
 
 
 // ---------------------------- CONFIG -----------------------------------------

@@ -19,7 +19,7 @@ const io = socketIO(server);
 let socketEmitter;
 
 io.on('connection', (socket) => {
-  process.stdout.write('>>> Socket Connection!');
+  process.stdout.write('\n>>> Socket Connection!\n');
   socketEmitter = (type, data) => socket.emit(type, data);
 });
 

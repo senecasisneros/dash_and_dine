@@ -11,10 +11,10 @@ const yelp = new Yelp({
 
 exports.yelpSearch = function (lat, long, cb) {
   yelp.search({ term: 'restaurants', ll: `${lat},${long}` })
-      .then(data => {
-        cb(null, data);
-      })
-      .catch(err => {
-        cb(err);
-      });
+  .then(data => {
+    cb(null, data);
+  })
+  .catch(err => {
+    cb(err);
+  });
 };
