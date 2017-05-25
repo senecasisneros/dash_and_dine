@@ -1,12 +1,19 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { FlatButton } from 'material-ui';
 
 class CurrentLocation extends React.Component {
+  static propTypes = {
+    getMaps: PropTypes.func.isRequired,
+    getLocation: PropTypes.func.isRequired,
+  };
+
   constructor(props) {
     super(props);
     this.displayName = 'CurrentLocation';
     this.onClick = this.onClick.bind(this);
   }
+
 
   onClick() {
     if ('geolocation' in navigator) {

@@ -1,5 +1,3 @@
-'use strict';
-
 const Yelp = require('yelp');
 
 const yelp = new Yelp({

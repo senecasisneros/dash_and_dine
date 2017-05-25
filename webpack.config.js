@@ -1,137 +1,34 @@
-import path from 'path';
-import webpack from 'webpack';
-import dotenv from 'dotenv';
+const webpack = require('webpack');
+const path = require('path');
 
-dotenv.config({ silent: true });
-const BUILD = process.env.NODE_ENV;
-console.log('BUILD: ', BUILD);
-
-const envs = {
-  development: {
-    NODE_ENV: JSON.stringify(BUILD),
-    PORT: JSON.stringify(3001),
-    BASE_URL: JSON.stringify(process.env.BASE_URL),
-  },
-  production: {
-    NODE_ENV: JSON.stringify(BUILD),
-    PORT: JSON.stringify(process.env.PORT),
-    DEPLOY_URL: JSON.stringify(process.env.DEPLOY_URL),
-  },
-};
-
-const devConfig = {
-  noInfo: true,
-  devtool: 'inline-source-map',
-  target: 'web',
-  debug: true,
+module.exports = {
   entry: [
-    'webpack-hot-middleware/client?reload=true',
+    'bootstrap-loader',
     './src/Styles/style.css',
-    './src/index.js',
+    './src/index'
   ],
   output: {
-    path: path.resolve('public'),
+    path: path.join(__dirname, '/build'),
     publicPath: '/',
-    filename: 'bundle.js',
-  },
-  devServer: {
-    contentBase: './src',
-  },
-  plugins: [
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin(),
-    new webpack.optimize.OccurenceOrderPlugin(),
-    new webpack.DefinePlugin({ 'process.env': envs.development }),
-    new webpack.ProvidePlugin({
-      $: 'jquery',
-      jQuery: 'jquery',
-    }),
-  ],
-  module: {
-    loaders: [
-      {
-        test: /\.jsx?$/,
-        loader: 'babel-loader',
-        exclude: /(node_modules|bower_components)/,
-        include: path.resolve('src'),
-      },
-      {
-        test: /(\.css)$/,
-        loaders: ['style', 'css'],
-      },
-      {
-        test: /\.s[ac]ss$/,
-        loaders: ['style', 'css', 'sass', 'postcss-loader'],
-      },
-      {
-        test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
-        loader: 'file',
-      },
-      {
-        test: /\.(woff|woff2)$/,
-        loader: 'url?prefix=font/&limit=5000',
-      },
-      {
-        test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
-        loader: 'url?limit=10000&mimetype=application/octet-stream',
-      },
-      {
-        test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
-        loader: 'url?limit=10000&mimetype=image/svg+xml',
-      },
-      {
-        test: /\.(png|gif|jpg|jpeg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-        loader: 'url?limit=10000?',
-      },
-      {
-        test: /\.(woff2?|ttf|eot|svg)(\?[\s\S]+)?$/,
-        loader: 'file?emitFile=false',
-      },
-      {
-        test: /\.(jpe?g|png|giff|svg)$/i,
-        loaders: [
-          'file?hash=sha512&digest=hex&name=[hash].[ext]',
-          'image-webpack?bypassOnDebug&optimizationLevel=7&interlaced=false',
-        ],
-      },
-      {
-        test: /\.json$/,
-        loader: 'json-loader',
-      },
-      {
-        test: /bootstrap-sass[\/\\]assets[\/\\]javascripts[\/\\]/,
-        loader: 'imports?jQuery=jquery',
-      },
-    ],
-  },
-  resolve: {
-    extensions: ['', '.js', '.jsx'],
-  },
-};
-
-const prodConfig = {
-  devtool: 'source-map',
-  noInfo: true,
-  debug: true,
-  target: 'web',
-  entry: [
-    './src/Styles/style.css',
-    './src/index.js',
-  ],
-  output: {
-    path: path.resolve('dist'),
-    publicPath: '/',
-    filename: 'bundle.js',
+    filename: 'bundle.js'
   },
   plugins: [
     new webpack.optimize.OccurrenceOrderPlugin(),
-    new webpack.DefinePlugin({ 'process.env': envs.production }),
+    new webpack.optimize.UglifyJsPlugin({
+      compress:{
+        warnings: false
+      }
+    }),
+    new webpack.DefinePlugin({
+      'process.env': {
+        NODE_ENV: JSON.stringify('production')
+      }
+    }),
     new webpack.ProvidePlugin({
       $: 'jquery',
       jQuery: 'jquery',
     }),
     new webpack.optimize.DedupePlugin(),
-    new webpack.optimize.UglifyJsPlugin(),
   ],
   module: {
     loaders: [
@@ -186,13 +83,28 @@ const prodConfig = {
         loader: 'json-loader',
       },
       {
-        test: /bootstrap-sass[\/\\]assets[\/\\]javascripts[\/\\]/,
-        loader: 'imports?jQuery=jquery',
+        test: /\.(png|woff|woff2|eot|ttf|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+        loader: 'url'
       },
+      {
+        loader: 'image-webpack-loader',
+        options: {
+          progressive: true,
+          optipng: {
+            optimizationLevel: 7,
+          },
+          mozjpeg: {
+            quality: 65
+          },
+          gifsicle: {
+            interlaced: true,
+          },
+          pngquant: {
+            quality: '65-90',
+            speed: 4
+          }
+        }
+      }
     ],
   },
-  resolve: {
-    extensions: ['', '.js', '.jsx'],
-  },
 };
-export default (BUILD === 'production') ? prodConfig : devConfig;

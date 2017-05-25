@@ -1,6 +1,9 @@
 import React from 'react';
-import { geocodeByAddress } from 'react-places-autocomplete';
+import PropTypes from 'prop-types';
+import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
 import { TextField, FlatButton } from 'material-ui';
+
+let placeSearch, autocomplete;
 
 const componentForm = {
   street_number: 'short_name',
@@ -11,27 +14,33 @@ const componentForm = {
   postal_code: 'short_name',
 };
 
+const inputStyle = {
+  width: '500px',
+  fontSize: '30px',
+};
+const btnStyle = {
+  fontSize: '40px',
+};
+
 let _autocomplete = null;
 
 class AutoComplete extends React.Component {
+  static propTypes = {
+    getMaps: PropTypes.func.isRequired,
+    getLocation: PropTypes.func.isRequired,
+  };
+
   constructor(props) {
     super(props);
-    this.state = {
-      address: '',
-    };
+    this.state = { address: '' };
     this.handleFormSubmit = this.handleFormSubmit.bind(this);
     this.onChange = this.onChange.bind(this);
   }
 
   componentDidMount() {
-    const script = document.createElement('script');
-    script.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyDb7kHy1SXgQHdwKwMX-PJzEPX8BAuJSIs&libraries=places';
-    script.async = false;
-    document.body.appendChild(script);
-    script.onload = function () {
-      _autocomplete = new google.maps.places.Autocomplete((document.getElementById('autocomplete')), { types: ['geocode'] });
-    };
+    _autocomplete = new google.maps.places.Autocomplete((document.getElementById('autocomplete')), { types: ['geocode'] });
   }
+
   onChange(e) {
     this.setState({ address: e.target.value });
   }
@@ -42,15 +51,12 @@ class AutoComplete extends React.Component {
 
     geocodeByAddress(address, (err, { lat, lng }) => {
       if (err) {
-        console.log(err);
+        console.log('Oh no!', err);
       }
 
+      { lat, lng; }
       const address = _autocomplete.getPlace().formatted_address;
-      const obj = {
-        address,
-        lat,
-        lng,
-      };
+      const obj = { address, lat, lng };
       this.props.getMaps(obj);
       this.props.getLocation(lat, lng);
     });
@@ -62,19 +68,16 @@ class AutoComplete extends React.Component {
           <TextField
             onChange={this.onChange}
             floatingLabelText="Enter a location"
-            floatingLabelFixed={false} placeholder=""
+            floatingLabelFixed={false}
+            placeholder=""
             className="inputStyle"
+            style={inputStyle}
             value={this.state.address}
             id="autocomplete"
             type="text"
-            size="60"
+            size="50"
           />
-          <FlatButton
-            className="btnStyle"
-            type="submit"
-            label="Enter"
-            primary
-          />
+          <FlatButton style={btnStyle} type="submit" label="Enter" primary />
         </form>
       </div>
     );

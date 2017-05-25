@@ -1,7 +1,13 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Gmaps, Marker, InfoWindow, Circle } from 'react-gmaps';
 
 class Maps extends React.Component {
+  static propTypes = {
+    coord: PropTypes.object,
+    mapAdd: PropTypes.array,
+  };
+
   constructor(props) {
     super(props);
     this.onMapCreated = this.onMapCreated.bind(this);
@@ -33,104 +39,104 @@ class Maps extends React.Component {
         zoom={15}
         styles={[
           {
-            'featureType': 'water',
-            'elementType': 'geometry',
-            'stylers': [
+            featureType: 'water',
+            elementType: 'geometry',
+            stylers: [
               {
-                'color': '#193341',
-              },
-            ]
-          },
-          {
-            'featureType': 'landscape',
-            'elementType': 'geometry',
-            'stylers': [
-              {
-                'color': '#2c5a71',
+                color: '#193341',
               },
             ],
           },
           {
-            'featureType': 'road',
-            'elementType': 'geometry',
-            'stylers': [
+            featureType: 'landscape',
+            elementType: 'geometry',
+            stylers: [
               {
-                'color': '#29768a',
-              },
-              {
-                'lightness': -37
+                color: '#2c5a71',
               },
             ],
           },
           {
-            'featureType': 'poi',
-            'elementType': 'geometry',
-            'stylers': [
+            featureType: 'road',
+            elementType: 'geometry',
+            stylers: [
               {
-                'color': '#406d80',
+                color: '#29768a',
+              },
+              {
+                lightness: -37,
               },
             ],
           },
           {
-            'featureType': 'transit',
-            'elementType': 'geometry',
-            'stylers': [
+            featureType: 'poi',
+            elementType: 'geometry',
+            stylers: [
               {
-                'color': '#406d80',
+                color: '#406d80',
               },
             ],
           },
           {
-            'elementType': 'labels.text.stroke',
-            'stylers': [
+            featureType: 'transit',
+            elementType: 'geometry',
+            stylers: [
               {
-                'visibility': 'on',
-              },
-              {
-                'color': '#3e606f',
-              },
-              {
-                'weight': 2,
-              },
-              {
-                'gamma': 0.84,
+                color: '#406d80',
               },
             ],
           },
           {
-            'elementType': 'labels.text.fill',
-            'stylers': [
+            elementType: 'labels.text.stroke',
+            stylers: [
               {
-                'color': '#ffffff',
+                visibility: 'on',
+              },
+              {
+                color: '#3e606f',
+              },
+              {
+                weight: 2,
+              },
+              {
+                gamma: 0.84,
               },
             ],
           },
           {
-            'featureType': 'administrative',
-            'elementType': 'geometry',
-            'stylers': [
+            elementType: 'labels.text.fill',
+            stylers: [
               {
-                'weight': 0.6,
-              },
-              {
-                'color': '#1a3541',
+                color: '#ffffff',
               },
             ],
           },
           {
-            'elementType': 'labels.icon',
-            'stylers': [
+            featureType: 'administrative',
+            elementType: 'geometry',
+            stylers: [
               {
-                'visibility': 'off',
+                weight: 0.6,
+              },
+              {
+                color: '#1a3541',
               },
             ],
           },
           {
-            'featureType': 'poi.park',
-            'elementType': 'geometry',
-            'stylers': [
+            elementType: 'labels.icon',
+            stylers: [
               {
-                'color': '#2c5a71',
+                visibility: 'off',
+              },
+            ],
+          },
+          {
+            featureType: 'poi.park',
+            elementType: 'geometry',
+            stylers: [
+              {
+                color: '#2c5a71',
               },
             ],
           },
@@ -138,7 +144,7 @@ class Maps extends React.Component {
         loadingMessage={'Looking for location'}
         params={{ v: '3.exp', key: 'YOUR_API_KEY' }}
         onMapCreated={this.onMapCreated}
-        >
+      >
         <Marker
           lat={latitude}
           lng={longitude}

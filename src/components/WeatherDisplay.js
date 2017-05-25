@@ -1,6 +1,13 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 class WeatherDisplay extends Component {
+  static propTypes = {
+    main: PropTypes.object,
+    description: PropTypes.string,
+    weather_desc: PropTypes.string,
+  };
+
   render() {
     const { temp } = this.props.main;
     const des = this.props.weather_desc.toLowerCase();

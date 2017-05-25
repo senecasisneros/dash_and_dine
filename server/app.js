@@ -1,87 +1,58 @@
-import express from 'express';
-import http from 'http';
-import path from 'path';
-import morgan from 'morgan';
-import bodyParser from 'body-parser';
-import mongoose from 'mongoose';
-import webpack from 'webpack';
-import dotenv from 'dotenv';
-import hotMiddleware from 'webpack-hot-middleware';
-import devMiddleware from 'webpack-dev-middleware';
-import webpackConfig from '../webpack.config';
-import socketIO from 'socket.io';
-// import api from './routes/api.js';
-var api = require('./routes/api');
+// CONSTANTS
+const PORT = process.env.PORT || 8000;
+const MONGO_URI = process.env.MONGODB_URI || 'mongodb://localhost/dashAndDine';
 
+// PACKAGE REQUIRES
+const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
+const express = require('express');
+const morgan = require('morgan');
+const path = require('path');
 
-// ---------------------------- CONFIG -----------------------------------------
-mongoose.Promise = Promise;
-dotenv.config({ silent: true });
-const PORT = process.env.PORT || 3000;
-const MONGO = process.env.MONGODB_URI || 'mongodb://localhost/dashanddine';
-const BUILD = process.env.NODE_ENV || 'development';
+require('dotenv').load({ silent: true });
+
+// DB CONNECT
+require('mongoose').connect(MONGO_URI, err => {
+  if (err) throw err;
+  console.log(`MongoDB connected to ${MONGO_URI}`);
+});
+
+// APP DECLARATION
 const app = express();
-const server = new http.Server(app);
-const io = socketIO(server);
-let indexFile;
-let socketEmitter;
 
-io.on('connection', (socket) => {
-  process.stdout.write('\n>>> Socket Connection!\n');
-  socketEmitter = (type, data) => socket.emit(type, data);
-});
-
-// ---------------------- Express Middleware -----------------------------------
-app.use(morgan('dev'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static('public'));
-app.use((req, res, next) => {
-  const resRef = res;
-  resRef.socketEmitter = socketEmitter;
-  resRef.handle = (err, data) => {
-    if (err) {
-      process.stdout.write(`Response Error: 😕
-${err}
-`);
-    } else {
-      process.stdout.write(`Response Data: 😎
-${data}
-`);
-    }
-    res.status(err ? 400 : 200).send(err || data);
-  };
-  next();
-});
-
-if (BUILD === 'development') {
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, '../build')));
+} else {
+  // WEBPACK CONFIG
+  const webpack = require('webpack');
+  const webpackConfig = require('../webpack.dev');
   const compiler = webpack(webpackConfig);
 
-  app.use(devMiddleware(compiler, {
+  app.use(require('webpack-dev-middleware')(compiler, {
     noInfo: true,
     publicPath: webpackConfig.output.publicPath,
   }));
-  app.use(hotMiddleware(compiler));
+
+  app.use(require('webpack-hot-middleware')(compiler));
 }
 
-// app.use('/api', require('./routes'));
+// GENERAL MIDDLEWARE
+app.use(morgan('dev'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cookieParser());
 
-app.use('/api', api);
+// ROUTES
+app.use('/api', require('./routes/api'));
+
 app.get('*', (req, res) => {
-  if (BUILD === 'development') {
-    indexFile = path.resolve('./src/index.html');
-  } else {
-    indexFile = path.resolve('./src/index.html');
-  }
-  process.stdout.write(`==> 📁  indexFile = ${indexFile}
-`);
-  res.sendFile(indexFile);
+  const indexPath = path.join(__dirname, '../src/index.html');
+  res.sendFile(indexPath);
 });
 
-// --------------------------- Listeners ---------------------------------------
-server.listen(PORT, err =>
-  process.stdout.write(err || `==> 📡  Server @ ${PORT}
-`));
-mongoose.connect(MONGO, err =>
-  process.stdout.write(err || `==> 📜  MONGO @ ${MONGO}
-`));
+// SERVER LISTEN
+app.listen(PORT, err => {
+  if (err) throw err;
+
+  console.log(`Server listening at http://localhost:${PORT}`);
+});

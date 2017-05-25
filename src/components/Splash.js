@@ -1,12 +1,17 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import AutoComplete from './AutoComplete';
 import { getLocation, getMaps } from '../actions/LocationActions';
 import CurrentLocation from './CurrentLocation';
 
 class Splash extends Component {
+  static propTypes = {
+    getLocation: PropTypes.func,
+    getMaps: PropTypes.func,
+  };
   render() {
-    let { getLocation, getMaps } = this.props;
+    const { getLocation, getMaps } = this.props;
     return (
       <div className="container">
         <div className="jumbotron mainJumbotron">

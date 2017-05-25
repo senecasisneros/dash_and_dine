@@ -1,14 +1,22 @@
 import { connect } from 'react-redux';
 import React, { Component } from 'react';
-import { Button, Jumbotron } from 'react-bootstrap';
+import PropTypes from 'prop-types';
+import { Jumbotron } from 'react-bootstrap';
 import StarRatingComponent from 'react-star-rating-component';
+import { FlatButton } from 'material-ui';
 import WeatherDisplay from './WeatherDisplay';
 import { receiveLocation, changeRes } from '../actions/LocationActions';
 import Maps from './Maps';
-import { FlatButton } from 'material-ui';
-
 
 class LocationPage extends Component {
+  static propTypes = {
+    receiveLocation: PropTypes.func.isRequired,
+    changeRes: PropTypes.func.isRequired,
+    res: PropTypes.object,
+    weather_desc: PropTypes.string,
+    weather: PropTypes.object,
+  };
+
   constructor() {
     super();
 
@@ -23,13 +31,13 @@ class LocationPage extends Component {
   }
 
   render() {
-    let { changeRes } = this.props;
+    const { changeRes } = this.props;
     if (!this.props.res) {
       return (<h1>Loading...</h1>);
     }
     const { name, display_phone, url, location, snippet_text, categories, rating, review_count } = this.props.res;
     const { address, city, state_code, postal_code, coordinate } = location;
-    const fullAddress = address + ' ' + city + ', ' + state_code + ' ' + postal_code;
+    const fullAddress = `${address} ${city}, ${state_code} ${postal_code}`;
     const phoneNumber = display_phone.substring(1);
     const { main, weather } = this.props.weather.state;
     const weather_desc = weather[0].main;
@@ -53,14 +61,12 @@ class LocationPage extends Component {
             value={rating}
           />
           <div className="center-block">
-            <FlatButton id="nextRest" bsStyle="primary" type="button" onClick={this._changeRes} label="Next Restaurant" primary />
-            <FlatButton id="nextRest" bsStyle="primary" type="button" target="_blank" href={url} label="Yelp" primary />
-            <FlatButton id="nextRest" bsStyle="primary" type="button" href='/' label="New Search" primary />
-          {/* <a id="nextRest" className="btn btn-primary" target="_blank" href={url}>Yelp</a> */}
-          {/* <a id="nextRest" className="btn btn-primary" href='/'>New Search</a> */}
+            <FlatButton id="nextRest" primary type="button" onClick={this._changeRes} label="Next Restaurant" primary />
+            <FlatButton id="nextRest" primary type="button" target="_blank" href={url} label="Yelp" primary />
+            <FlatButton id="nextRest" primary type="button" href="/" label="New Search" primary />
           </div>
           <div className="cuisine col-xs-12 col-sm-12 col-md-6 col-lg-6">
-          <WeatherDisplay main={main} weather_desc={weather_desc} description={description}/>
+            <WeatherDisplay main={main} weather_desc={weather_desc} description={description} />
           </div>
           <div className="mapDiv col-xs-12 col-sm-12 col-md-6 col-lg-6">
             <Maps mapAdd={address} coord={coordinate} />
@@ -75,14 +81,12 @@ export default connect(state => ({
   res: state.restaurant.choice,
   weather: state.weather,
 }),
-dispatch => {
-  return {
-    receiveLocation() {
-      dispatch(receiveLocation());
-    },
-    changeRes() {
-      dispatch(changeRes());
-    },
-  };
-}
+dispatch => ({
+  receiveLocation() {
+    dispatch(receiveLocation());
+  },
+  changeRes() {
+    dispatch(changeRes());
+  },
+})
 )(LocationPage);
