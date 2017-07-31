@@ -10,6 +10,9 @@
     "build": "NODE_ENV='production' webpack",
     "prod": "NODE_ENV='production' npm start"
   },
+  "engines": {
+    "node": "6.5.0"
+  },
   "keywords": [],
   "author": "Seneca Sisneros",
   "license": "ISC",
