@@ -5,7 +5,7 @@ module.exports = {
   entry: [
     'bootstrap-loader',
     './src/Styles/style.css',
-    './src/index'
+    './src/index',
   ],
   output: {
     path: path.join(__dirname, '/build'),
